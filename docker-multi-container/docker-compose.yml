@@ -1,0 +1,19 @@
+version : '3.8'
+services:
+  web:
+    image: python:3.9-slim
+    command: python app.py
+    ports:
+      - "8081:5000"
+    volumes:
+      - .:/code
+    working_dir: /code
+    environment:
+      - FLASK_ENV=development
+    depends_on:
+      - redis
+    entrypoint: >
+      sh -c "pip install -r requirements.txt && python app.py"
+
+  redis:
+    image: "redis:alpine"
